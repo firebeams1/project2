@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="car.css">
+        <script src="https://kit.fontawesome.com/60e2ed7f33.js"
+            crossorigin="anonymous"></script>
+        <script src="vue.min.js"></script>
+    </head>
+    <body>
+        <div id="app" class="shoppingBar">
+            <table>
+                <tbody>
+                    <tr class="tr_size">
+                        <th><input type="checkbox" @click="box_go"></th>
+                        <th>商品名称</th>
+                        <th>数量</th>
+                        <th>单价（元）</th>
+                        <th>金额（元）</th>
+                        <th>操作</th>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr v-for="(tmp,index) in list" class="commodity">
+                        <th><input type="checkbox" v-model="tmp.isSel"></th>
+                        <th><img :src="tmp.image" alt="" width="50px"
+                                height="50px">{{tmp.name}}</th>
+                        <th class="jjf"><input type="number" v-model="tmp.id"
+                                min="0" max="20"></th>
+                        <th class="content">{{tmp.price}}</th>
+                        <th class="jiner">{{tmp.price*tmp.id}}</th>
+                        <th class="dellll"><button @click="del(index)">删除</button></th>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="shoppingBar-footer">
+                <button id="go" type="button">结算</button>
+                <div class="buy"> <span id="jian">{{allshop()}}</span>件商品总额:
+                    <span id="zj">{{allmoney()}}</span></div>
+            </div>
+            <div id="zt">
+                <a href="index.html"><i class="fa-solid fa-house"></i></a>
+                <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
+
+        
+    </body>
+    <script>
+        const app=new Vue({
+            el:'#app',
+            methods:{
+                del(index){
+                    this.list.splice(index,1)
+                },
+                allshop(){
+                    let num=0;
+                    for(var i in this.list){
+                        if(this.list[i].isSel){
+                            num+=parseInt(this.list[i].id)
+                        }
+                    }
+                    return num
+                },
+                allmoney(){
+                    let arr=[...this.list];
+                      let num=0;
+                        for(var i in this.list){ 
+                           if(this.list[i].isSel){                                     
+                            num+=arr[i].price*arr[i].id
+                        }
+                    }
+                    return num
+                },
+                box_go(){  
+                    if(this.box){
+                        for(var i in this.list){
+                            this.list[i].isSel=true
+                        }
+                        this.box=0;
+                    }else{
+                        for(var i in this.list){
+                            this.list[i].isSel=false
+                        }
+                        this.box=1;
+                    }               
+                }
+            },
+            data:{
+                box:1,
+                list:[{
+                    name:"板鞋",
+                    image:"img/shoes/banxie1.png",
+                    price:249,
+                    isSel:false,
+                    id:1
+                },{
+                    name:"篮球鞋",
+                    image:"img/shoes/lanqiu2.png",
+                    price:399,
+                    isSel:false,
+                    id:1
+                },{
+                    name:"休闲鞋",
+                    image:"img/shoes/xiuxian1.png",
+                    price:349,
+                    isSel:false,
+                    id:1 
+                },]
+            }
+        })
+    </script>
+</html>
