@@ -209,6 +209,8 @@ function playPause(){
 
 /* 显示悬停播放位置弹层 */
 function showHover(e){
+  console.log(ct_minutes);
+  console.log(ct_seconds);
   /* 计算鼠标在进度条上的悬停位置（当前鼠标的x坐标-进度条在窗口的left位置） */
   progress_t=e.clientX - progress_box.getBoundingClientRect().left;
   /* 计算鼠标进度条上悬停时的音频位置 */
@@ -319,11 +321,14 @@ if(play_progress==100){
 
 /* 切换歌曲（flag：0=初始），1下一首，-1上一首 */
 function selectTrack(flag){
+  console.log(flag);
   if(flag==0||flag==1){
     ++cur_index;
+    console.log(cur_index)
   }
   else{
     --cur_index;
+    console.log(cur_index)
   }
   if(cur_index>-1&&cur_index<albums.length){
     if(flag==0){
@@ -339,6 +344,7 @@ function selectTrack(flag){
     let cur_track_name=track_names[cur_index];
 
     audio.src='music/'+cur_album+'.mp3';
+    console.log(audio.src);
     if(flag!=0){
       audio.play();
       player_track.classList.add('active');
